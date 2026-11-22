@@ -1,0 +1,23 @@
+# LangChain & LangGraph
+langchain>=1.5.0
+langchain-core>=1.8.0
+langchain-groq>=1.2.0
+langchain-community>=0.4.0
+langchain-chroma>=1.1.0
+langchain-huggingface>=1.2.0
+langchain-tavily>=0.2.0
+langgraph>=1.2.0
+
+# LLM Providers & Tools
+groq>=1.7.0
+tavily-python>=0.5.0
+duckduckgo-search>=7.0.0
+
+# Vector Store & Embeddings
+chromadb>=1.0.0
+sentence-transformers>=3.0.0
+pypdf>=5.0.0
+
+# Utilities
+python-dotenv>=1.0.0
+pydantic>=2.10.0
