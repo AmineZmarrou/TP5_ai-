@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        "."
+    ],
+    "graphs": {
+        "agentic_rag": "./partie_B_LangGraph/02_agentic_rag/graph.py:studio_graph"
+    },
+    "env": "./.env"
+}
