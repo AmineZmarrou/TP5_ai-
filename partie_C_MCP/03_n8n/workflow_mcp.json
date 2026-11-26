@@ -1,0 +1,143 @@
+{
+    "name": "TP5 - Agent IA MCP Groq",
+    "nodes": [
+        {
+            "parameters": {
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+            "typeVersion": 1.5,
+            "position": [
+                0,
+                0
+            ],
+            "id": "db441986-6ae0-45ca-81b9-a6ce10841ab3",
+            "name": "When chat message received",
+            "webhookId": "eb2e11c8-8b9c-4368-9f46-b4f642fe986f"
+        },
+        {
+            "parameters": {
+                "options": {
+                    "systemMessage": "Tu es un assistant intelligent francophone\nspecialise dans l'utilisation des outils MCP.\n\nTu disposes de deux outils distants :\n\n- additionner : calculer la somme de deux nombres.\n- consulter_garantie : consulter la garantie\n  d'un produit par son numero de serie.\n\nREGLES OBLIGATOIRES :\n\n1. Pour toute addition, utilise additionner.\n\n2. Pour toute demande de garantie contenant\n   un numero de serie, utilise consulter_garantie.\n\n3. Appelle consulter_garantie meme si le numero\n   semble incorrect, fictif ou inexistant.\n\n4. Seul le serveur MCP peut verifier\n   si un produit existe.\n\n5. Ne fabrique aucune information de garantie.\n\n6. Si le produit est introuvable,\n   explique-le clairement.\n\n7. Si aucun numero de serie n'est fourni\n   dans la question ou dans la conversation,\n   demande-le a l'utilisateur.\n\n8. Pour les questions generales,\n   reponds directement sans outil.\n\n9. Utilise les resultats reels des outils\n   pour generer ta reponse finale.\n\n10. Reponds toujours en francais.\n\nEXEMPLES :\n\nQuestion : Combien font 25 + 35 ?\nAction : utiliser additionner.\n\nQuestion : Consulte la garantie de PX200-0042.\nAction : utiliser consulter_garantie.\n\nQuestion : Consulte la garantie du numero XYZ-9999.\nAction : utiliser consulter_garantie meme si\nle produit semble inexistant.\n\nQuestion : Bonjour.\nAction : repondre directement."
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.agent",
+            "typeVersion": 3.1,
+            "position": [
+                224,
+                0
+            ],
+            "id": "c29355ce-2a90-44b2-8eef-15c2c559c04a",
+            "name": "AI Agent"
+        },
+        {
+            "parameters": {
+                "model": "openai/gpt-oss-120b",
+                "options": {
+                    "temperature": 0
+                }
+            },
+            "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+            "typeVersion": 1,
+            "position": [
+                96,
+                192
+            ],
+            "id": "8676b8b4-4f44-442a-a7e5-02f8cb5068c7",
+            "name": "Groq Chat Model",
+            "credentials": {
+                "groqApi": {
+                    "id": "FPtTCyyuxGT74aGW",
+                    "name": "Groq account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "contextWindowLength": 10
+            },
+            "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+            "typeVersion": 1.4,
+            "position": [
+                240,
+                208
+            ],
+            "id": "397f3a4d-c2a7-498b-bd19-0f1067117a50",
+            "name": "Simple Memory"
+        },
+        {
+            "parameters": {
+                "endpointUrl": "http://127.0.0.1:8000/mcp",
+                "options": {}
+            },
+            "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+            "typeVersion": 1.4,
+            "position": [
+                368,
+                208
+            ],
+            "id": "d32c3b86-617a-45b5-ab60-d9160c9a80f0",
+            "name": "MCP Client"
+        }
+    ],
+    "pinData": {},
+    "connections": {
+        "When chat message received": {
+            "main": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Groq Chat Model": {
+            "ai_languageModel": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "ai_languageModel",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Simple Memory": {
+            "ai_memory": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "ai_memory",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "MCP Client": {
+            "ai_tool": [
+                [
+                    {
+                        "node": "AI Agent",
+                        "type": "ai_tool",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": false,
+    "settings": {
+        "executionOrder": "v1",
+        "binaryMode": "separate"
+    },
+    "versionId": "5ebee2c3-7509-4a3a-a9ba-9dc2f4757272",
+    "meta": {
+        "templateCredsSetupCompleted": true,
+        "instanceId": "d17132aecd8434e6723a75f38a747f06f69055383f3ae6900e9fecd3567b9be4"
+    },
+    "nodeGroups": [],
+    "id": "4hNZUt9Nns0fm07U",
+    "tags": []
+}

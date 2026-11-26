@@ -1,0 +1,17 @@
+{
+    "PX200-0042": {
+        "produit": "PX-200",
+        "date_achat": "2026-06-15",
+        "date_expiration": "2028-06-15"
+    },
+    "TV500-0125": {
+        "produit": "Smart TV 500",
+        "date_achat": "2024-01-10",
+        "date_expiration": "2026-01-10"
+    },
+    "SP100-0089": {
+        "produit": "Speaker SP-100",
+        "date_achat": "2026-09-20",
+        "date_expiration": "2027-09-20"
+    }
+}
